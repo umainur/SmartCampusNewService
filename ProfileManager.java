@@ -99,13 +99,13 @@ public class ProfileManager extends CampusService{
             option = readInt();
 
             switch(option){
-                case 1: addNewStudent();
+                case 1: addRecord();
                     break;
-                case 2: displayAll();
+                case 2: displayRecords();
                     break;
                 case 3: 
                     System.out.print("Enter Student ID to search: ");
-                    searchId(scanner.nextLine().trim().toUpperCase());
+                    searchRecord(scanner.nextLine().trim().toUpperCase());
                     break;
                 case 4: countByCategory();
                     break;
@@ -121,7 +121,7 @@ public class ProfileManager extends CampusService{
     }
 
     @Override
-    public void addNewStudent() {
+    public void addRecord() {
         System.out.println("\n-------Add New Student-------");
     try{
         System.out.print("Student ID : ");
@@ -158,7 +158,7 @@ public class ProfileManager extends CampusService{
         }
     }
         @Override
-        public void displayAll(){
+        public void displayRecords(){
             if(students.isEmpty()){
                 System.out.print("No student records found!");
                 return;
@@ -170,7 +170,7 @@ public class ProfileManager extends CampusService{
         }
 
         @Override
-        public void searchId(String id) {
+        public void searchRecord(String id) {
             Students s = findById(id);
                 if (s != null)
                     s.displayInfo();

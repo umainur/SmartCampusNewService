@@ -18,13 +18,13 @@ public class CampusService{
     public void displayMenu(){};
 
     //add new record
-    public void addNewStudent(){};
+    public void addRecord(){};
 
     //display record
-    public void displayAll(){};
+    public void displayRecords(){};
 
     //seacrh record by studend ID
-    public void searchId(String id){};
+    public void searchRecord(String id){};
 
     //save all record to file 
     public void saveToFile(){};
