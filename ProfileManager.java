@@ -103,7 +103,9 @@ public class ProfileManager extends CampusService{
                     break;
                 case 2: displayAll();
                     break;
-                case 3: searchId();
+                case 3: 
+                    System.out.print("Enter Student ID to search: ");
+                    searchId(scanner.nextLine().trim().toUpperCase());
                     break;
                 case 4: countByCategory();
                     break;
@@ -179,12 +181,12 @@ public class ProfileManager extends CampusService{
         @Override
         public void saveToFile() {
             ensureDataDirectory();
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(dataFile))) {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
                 for (int i = 0; i < students.size(); i++) {
                     bw.write(students.get(i).SaveInTxt());
                     bw.newLine();
                 }
-                printSaveSuccess();
+                saveSuccess();
             } catch (IOException e) {
                 System.out.println("File Error (save): " + e.getMessage());
             }
@@ -193,7 +195,7 @@ public class ProfileManager extends CampusService{
         @Override
         public void loadFromFile() {
             ensureDataDirectory();
-            File file = new File(dataFile);
+            File file = new File(fileName);
             if (!file.exists()) return; // nothing to load yet
     
             students.clear();
@@ -210,7 +212,7 @@ public class ProfileManager extends CampusService{
                         System.out.println("Skipping invalid record: " + e.getMessage());
                     }
                 }
-                printLoadSuccess(loaded);
+                loadSuccess(loaded);
             } catch (IOException e) {
                 System.out.println("File Error (load): " + e.getMessage());
             }

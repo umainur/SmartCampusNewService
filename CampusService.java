@@ -1,4 +1,6 @@
 //superclass
+import java.io.*;
+import java.util.Vector;
 
 public class CampusService{
     protected String serviceType; 
@@ -16,13 +18,13 @@ public class CampusService{
     public void displayMenu(){};
 
     //add new record
-    public void addRecord(){};
+    public void addNewStudent(){};
 
     //display record
-    public void displayRecord(){};
+    public void displayAll(){};
 
     //seacrh record by studend ID
-    public void searchRecord(String id){};
+    public void searchId(String id){};
 
     //save all record to file 
     public void saveToFile(){};
@@ -30,8 +32,16 @@ public class CampusService{
     //load all record from file 
     public void loadFromFile(){};
 
+    public void displayServiceHeader() {
+        System.out.println("\n========================================");
+        System.out.println("  SERVICE: " + serviceType.toUpperCase());
+        System.out.println("========================================");
+    }
+
     public String getServiceType(){ return serviceType;}
     public String getFileName(){ return fileName;}
+
+    protected void ensureDataDirectory() {}
 
     //confirmation record dah save dalam file
     protected void saveSuccess(){
@@ -39,7 +49,7 @@ public class CampusService{
     }
 
     //confirmation record dah load from file
-    protected void loadSuccess(){
+    protected void loadSuccess(int count){
         System.out.println("Records is loaded from " + fileName);
     }
 }
