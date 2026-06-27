@@ -259,12 +259,10 @@ public class BorrowEquipment extends CampusService{
         try(BufferedReader readFile = new BufferedReader(new FileReader(fileName))) {
             String line;
             Equipment.getRecord().clear(); //clearkan dulu nanti tak duplicate bila nak load info
-            int count = 0;
             while ((line = readFile.readLine()) != null){
                 Equipment.getRecord().add(Equipment.fromTXTFile(line));
-                count++;
             }
-            loadSuccess(count);
+            loadSuccess();
         } catch (IOException e) {
             System.out.println("File cannot be load");
         }
