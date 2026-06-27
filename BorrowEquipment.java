@@ -151,7 +151,7 @@ public class BorrowEquipment extends CampusService{
         //nak guna choice sebab mula ii guna masukkan input guna keyboard tulis full name tapi nanti if if type then susah so nak senang buat lah choice 
         EquipmentType type = null;
         while (true) {
-        System.out.println("\n--------Equipment List---------");
+        System.out.println("\nEquipment List");
         System.out.println("1. LAPTOP \n2. CAMERA \n3. PROJECTORS \n4. SENSOR_KIT"); 
         System.out.print("Enter your choice: ");
         
@@ -190,7 +190,7 @@ public class BorrowEquipment extends CampusService{
         //buat object baru untuk record baru 
         Equipment newRecord = new Equipment(studentName, studentID, type, status, borrowDuration);
         Equipment.getRecord().addElement(newRecord); //tambah record baru ke vector
-        System.out.println("\nRecord added successfully!");
+        //System.out.println("\nRecord added successfully!");
         saveToFile();
     }   
 
