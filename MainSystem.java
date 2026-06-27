@@ -6,7 +6,7 @@ public class MainSystem {
         Scanner in = new Scanner(System.in);
         ProfileManager   pm = new ProfileManager(in);
         FacilityBookings fb = new FacilityBookings(in);
-        EquipmentBorrowing eb = new EquipmentBorrowing(in);
+        BorrowEquipment eb = new BorrowEquipment(in);
         IssueReporting   ir = new IssueReporting(in);
         FeedbackSystem   fs = new FeedbackSystem(in);
 

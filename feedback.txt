@@ -3,4 +3,5 @@ Sarah|3|COLLEGE|Limited parking slots
 mia|4|COLLEGE|okey
 lia|5|COLLEGE|ktf cantik
 Mirah|5|BUS|Bus on time
+Kira|4|BUS|bawa laju
 kalid|5|FOOD|meranti makanan dia murah

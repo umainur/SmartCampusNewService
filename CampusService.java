@@ -35,11 +35,11 @@ public class CampusService{
 
     //confirmation record dah save dalam file
     protected void saveSuccess(){
-        System.out.println("Records is successfully save to " + fileName);
+        System.out.println("Records were successfully saved to " + fileName);
     }
 
     //confirmation record dah load from file
-    protected void loadSuccess(int count){
+    protected void loadSuccess(){
         System.out.println("Records is loaded from " + fileName);
     }
 }

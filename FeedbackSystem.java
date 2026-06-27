@@ -45,21 +45,15 @@ class Feedback {
         return name + "|" + rating + "|" + category.name() + "|" + comment;
     }
 
-    //error message ini hanya akan keluar bila manually ubah data dalam file .txt
-    public static Feedback fromTXT(String line) throws IllegalArgumentException {
-        String[] p = line.split("\\|", 4); //part ni untuk split kepada 4 bahagian (name[0] to category[4])
-        if (p.length < 4) throw new IllegalArgumentException("This data is missing information: " + line);
-        try {
-            String name = p[0].trim(); //trim untuk delete empty space
-            int rating = Integer.parseInt(p[1].trim());
-            Category category = Category.valueOf(p[2].trim().toUpperCase()); //jgn lupa category tu enum
-            String comment = p[3].trim();
-            if (rating < 1 || rating > 5)
-                throw new IllegalArgumentException("Rating out of range: " + rating);
-            return new Feedback(name, rating, comment, category);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid feedback data: " + e.getMessage()); //getMessage() dioffer oleh Throwable slide 33 chap9
-        }
+    //convert text line from .txt into Feedback object
+    public static Feedback fromTXT(String line){
+        String[] p = line.split("\\|"); //part ni untuk split bahagian (name[0] to category[4])
+        String name = p[0];
+        int rating = Integer.parseInt(p[1]); //convert string to integer
+        Category category = Category.valueOf(p[2]);  //convert string to object
+        String comment = p[3];
+       
+        return new Feedback(name, rating, comment, category);   //create object
     }
 }
 
@@ -70,9 +64,9 @@ public class FeedbackSystem extends CampusService {
     private ArrayList<Feedback> busFeedback = new ArrayList<>();
     private Scanner scanner;
 
-    public FeedbackSystem(Scanner scanner) {
+    public FeedbackSystem(Scanner in) {
         super("Student Feedback Collection", "feedback.txt");
-        this.scanner = scanner;
+        this.scanner = in;
         loadFromFile();   //load data dalam feedback.txt
         if (collegeFeedback.isEmpty() && foodFeedback.isEmpty() && busFeedback.isEmpty()) {
             seedSampleData();  //keluarkan data sedia ada
@@ -139,7 +133,7 @@ public class FeedbackSystem extends CampusService {
             while (addMore) {
                 System.out.println("\n-- Enter Your Feedback --");
                 System.out.print("Name: ");
-                String name = scanner.nextLine().trim();
+                String name = scanner.nextLine();
                 if (name.isEmpty()) throw new IllegalArgumentException("Name cannot be empty.");
 
                 System.out.print("Rating (1-5): ");
@@ -148,13 +142,13 @@ public class FeedbackSystem extends CampusService {
                     throw new IllegalArgumentException("Rating must be between 1 and 5.");
 
                 System.out.print("Comment: ");
-                String comment = scanner.nextLine().trim();
+                String comment = scanner.nextLine();
 
                 selectedList.add(new Feedback(name, rating, comment, cat));
                 System.out.println("Feedback added!");
 
                 System.out.print("Add another feedback? (yes/no): ");
-                addMore = scanner.nextLine().trim().equalsIgnoreCase("yes");
+                addMore = scanner.nextLine().equalsIgnoreCase("yes");
             }
             saveToFile();
 
@@ -180,19 +174,6 @@ public class FeedbackSystem extends CampusService {
         }
     }
 
-    @Override
-    public void searchRecord(String name) {
-        boolean found = false;
-        ArrayList<Feedback> all = getAllFeedback();
-        for (Feedback f : all) {
-            if (f.getName().equalsIgnoreCase(name)) {
-                f.display();
-                found = true;
-            }
-        }
-        if (!found) System.out.println("No feedback found from: " + name);
-    }
-
     //BufferedWriter tu untuk store dulu semua
     //FileWriter tu akan open file then write direct
     @Override
@@ -202,7 +183,7 @@ public class FeedbackSystem extends CampusService {
                 bw.write(f.toTXT());
                 bw.newLine();
             }
-            System.out.println("Feedback successfully saved to file");
+            saveSuccess();
         } catch (IOException e) {
             System.out.println("File Error (save): " + e.getMessage());
         }
@@ -211,31 +192,21 @@ public class FeedbackSystem extends CampusService {
     //this will read feedback.txt, take each line to Feedback object
     @Override
     public void loadFromFile() {
-        File file = new File(fileName); //refer to feedback.txt
-        if (!file.exists()) return;
-
-        collegeFeedback.clear();  //ni clear dulu to avoid duplicate data 
+        collegeFeedback.clear();  // Clear old data before loading to avoid duplicates
         foodFeedback.clear(); //because when you load file, you will add data again
         busFeedback.clear();
-        int loaded = 0;
 
         //open file
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) { //read line by line
-                line = line.trim();
                 if (line.isEmpty()) continue;
-                try {
-                    Feedback f = Feedback.fromTXT(line); //convert text to object
-                    getListByCategory(f.getCategory()).add(f);
-                    loaded++;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Skipping invalid record: " + e.getMessage());
-                }
+                Feedback f = Feedback.fromTXT(line); //convert text to object
+                getListByCategory(f.getCategory()).add(f);
             }
-            loadSuccess(loaded);
+            loadSuccess();
         } catch (IOException e) {
-            System.out.println("File Error (load): " + e.getMessage());
+            System.out.println("File Error" + e.getMessage());
         }
     }
 
@@ -268,7 +239,7 @@ public class FeedbackSystem extends CampusService {
     }
 
     private int readInt() {
-        try { return Integer.parseInt(scanner.nextLine().trim()); }
+        try { return Integer.parseInt(scanner.nextLine()); }
         catch (NumberFormatException e) {
             System.out.println("Invalid input , please enter a number.");
             return -1;
