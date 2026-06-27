@@ -45,24 +45,23 @@ class Students{
     }
 
     //simpan maklumat dalam txt
-    public String SaveInTxt(){
+    public String toTXT(){
         return studentId + "|" + studentName + "|" + programme + "|" + yearOfStudy + "|" + category.name() ;
     }
 
     //reconstruct student object from txt""
-    public static Students fromTxtFile(String line) throws IllegalArgumentException{
+    public static Students fromTXT(String line) throws IllegalArgumentException{
         String[] parts = line.split("\\|", 5);
-        if(parts.length<5) throw new IllegalArgumentException("MAlformed line: " + line);
         String id = parts[0].trim();
         String name = parts[1].trim();
         String prog = parts[2].trim();
         int year;; 
         try{ year = Integer.parseInt(parts[3].trim());}
-        catch (NumberFormatException e){ throw new IllegalArgumentException("Invalid year in CSV" + parts[3]); }
-        StudentCategory cat = StudentCategory.valueOf(parts[4].trim().toUpperCase());
-        return new Students(id, name, prog, year, cat);
-
-    }
+        catch (NumberFormatException e){ 
+            throw new IllegalArgumentException("Invalid year in CSV" + parts[3]); }
+            StudentCategory cat = StudentCategory.valueOf(parts[4].trim().toUpperCase());
+            return new Students(id, name, prog, year, cat);
+        }
 }
 
 //subclass CampusService
@@ -74,14 +73,7 @@ public class ProfileManager extends CampusService{
     public ProfileManager(Scanner scanner){
         super("Student Profile Management", "students.txt");
         this.scanner=scanner;
-        ensureDataDirectory();   ///ni amik dari mana?
         loadFromFile();          // auto-load on startup //ni pun?
-    }
-
-    //polymorphism
-    @Override
-    public void displayServiceHeader(){
-        System.out.println("\n-------Student Profile Management System-------");
     }
 
     public void displayMenu(){
@@ -180,10 +172,9 @@ public class ProfileManager extends CampusService{
 
         @Override
         public void saveToFile() {
-            ensureDataDirectory();
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
                 for (int i = 0; i < students.size(); i++) {
-                    bw.write(students.get(i).SaveInTxt());
+                    bw.write(students.get(i).toTXT());
                     bw.newLine();
                 }
                 saveSuccess();
@@ -194,30 +185,24 @@ public class ProfileManager extends CampusService{
 
         @Override
         public void loadFromFile() {
-            ensureDataDirectory();
             File file = new File(fileName);
-            if (!file.exists()) return; // nothing to load yet
-    
-            students.clear();
-            int loaded = 0;
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line;
+                if (!file.exists()) return; // nothing to load yet
+
+                try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+                    String line;
                 while ((line = br.readLine()) != null) {
-                    line = line.trim();
                     if (line.isEmpty()) continue;
                     try {
-                        students.add(Students.fromTxtFile(line));
-                        loaded++;
+                        students.add(Students.fromTXT(line));
                     } catch (IllegalArgumentException e) {
                         System.out.println("Skipping invalid record: " + e.getMessage());
                     }
-                }
-                loadSuccess(loaded);
-            } catch (IOException e) {
-                System.out.println("File Error (load): " + e.getMessage());
             }
-        }
-
+            loadSuccess();
+        } catch (IOException e) {
+            System.out.println("File Error: " + e.getMessage());
+    }
+}
         public void countByCategory(){
             int ug=0, pg=0, ex=0;
             for(int i=0;i<students.size(); i++){
