@@ -46,7 +46,7 @@ class Feedback {
     }
 
     //convert text line from .txt into Feedback object
-    public static Feedback fromTXT(String line){
+    public Feedback fromTXT(String line){
         String[] p = line.split("\\|"); //part ni untuk split bahagian (name[0] to category[4])
         String name = p[0];
         int rating = Integer.parseInt(p[1]); //convert string to integer

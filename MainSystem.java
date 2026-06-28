@@ -4,11 +4,11 @@ import java.util.Scanner;
 public class MainSystem {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        ProfileManager   pm = new ProfileManager(in);
+        ProfileManager pm = new ProfileManager(in);
         FacilityBookings fb = new FacilityBookings(in);
         BorrowEquipment eb = new BorrowEquipment(in);
-        IssueReporting   ir = new IssueReporting(in);
-        FeedbackSystem   fs = new FeedbackSystem(in);
+        IssueReporting ir = new IssueReporting(in);
+        FeedbackSystem fs = new FeedbackSystem(in);
 
         CampusService[] services = { pm, fb, eb, ir, fs };
 
