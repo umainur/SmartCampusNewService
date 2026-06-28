@@ -83,7 +83,7 @@ class FReportIssue{
 public class IssueReporting extends CampusService {
 
     private Scanner scanner;
-    Vector<FReportIssue> issueList = FReportIssue.getRecord();
+    private Vector<FReportIssue> issueList = FReportIssue.getRecord();
     
     IssueReporting(Scanner input){
         super("Report Issue", "issues.txt");

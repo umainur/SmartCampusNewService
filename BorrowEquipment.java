@@ -84,7 +84,7 @@ class Equipment{
 public class BorrowEquipment extends CampusService{
     
     private Scanner scanner;
-    Vector<Equipment> records = Equipment.getRecord();
+    private Vector<Equipment> records = Equipment.getRecord();
 
     BorrowEquipment(Scanner input){
         super("Equipment Borrowing Service", "equipments.txt");
