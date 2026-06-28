@@ -159,7 +159,6 @@ public class FeedbackSystem extends CampusService {
 
     @Override
     public void displayRecords() {
-        try {
             Category cat = readCategory();
             if (cat == null) return;
             ArrayList<Feedback> selectedList = getListByCategory(cat);
@@ -169,9 +168,6 @@ public class FeedbackSystem extends CampusService {
             } else {
                 for (Feedback f : selectedList) f.display();
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
     }
 
     //BufferedWriter tu untuk store dulu semua
