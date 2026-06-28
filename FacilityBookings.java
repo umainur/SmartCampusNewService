@@ -272,6 +272,7 @@ public class FacilityBookings extends CampusService {
         bookings.get(index).setStatus(newStatus);
         bookings.set(index, bookings.get(index));
         System.out.println("Status successfully updated to " + newStatus + "\n");
+        saveToFile();
     }
 
     private FacilityType readFacilityType() {
