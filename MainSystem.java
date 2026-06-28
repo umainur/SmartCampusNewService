@@ -26,24 +26,20 @@ public class MainSystem {
 
             switch (choice) {
                 case 1:
-                    pm.displayMenu();
-                    break;
                 case 2:
-                    fb.displayMenu();
-                    break;
                 case 3:
-                    eb.displayMenu();
-                    break;
                 case 4:
-                    ir.displayMenu();
-                    break;
                 case 5:
-                    fs.displayMenu();
+                    services[choice - 1].displayMenu();
                     break;
                 case 6:
                     displaySummary(pm, fb);
                     break;
                 case 0:
+                    System.out.println("\nSaving all records");
+                    for(CampusService service : services){
+                        service.saveToFile();
+                    }
                     System.out.println("\nGoodbye, Thank you for using Smart Campus System.");
                     running = false;
                     break;
@@ -74,7 +70,7 @@ public class MainSystem {
         System.out.println("\n--------------------------------------");
         System.out.println("           SYSTEM SUMMARY             ");
         System.out.println("--------------------------------------");
-        System.out.printf( "\n  Total Registered Students :" + pm.getStudentCount());
+        System.out.printf( "\n  Total Registered Students : " + pm.getStudentCount());
         System.out.printf( "\n  Total Facility Bookings   : " + fb.getBookingCount());
         System.out.printf( "\n  Total Equipment Borrowed  : " +  Equipment.getTotalBorrowed());
         System.out.printf( "\n  Total Issue Reports       : " + FReportIssue.getTotalIssues());
