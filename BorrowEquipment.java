@@ -134,7 +134,7 @@ public class BorrowEquipment extends CampusService{
                             System.out.println("\nInvalid choice. Please try again!");
                             continue;
                     }
-            } catch (Exception e) { System.out.println("Invalid choice.Please try again");} 
+            } catch (NumberFormatException e) { System.out.println("Invalid choice.Please try again");} 
         } while (choice != 0);
     }
 
