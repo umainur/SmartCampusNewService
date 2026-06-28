@@ -83,7 +83,8 @@ class Equipment{
     
 public class BorrowEquipment extends CampusService{
     
-    Scanner scanner;
+    private Scanner scanner;
+    Vector<Equipment> records = Equipment.getRecord();
 
     BorrowEquipment(Scanner input){
         super("Equipment Borrowing Service", "equipments.txt");
@@ -196,7 +197,7 @@ public class BorrowEquipment extends CampusService{
 
     @Override //(ii) display all borrowingrecords 
     public void displayRecords(){
-        Vector<Equipment> records = Equipment.getRecord();
+
         System.out.println("\n---------All Borrowing Records---------");
         if (records.isEmpty()){
             System.out.println("\nNo records found.");
@@ -217,7 +218,6 @@ public class BorrowEquipment extends CampusService{
 
     @Override //(iii) search borrrow record by student ID
     public void searchRecord(String studentID){
-        Vector<Equipment> records = Equipment.getRecord();
         System.out.println("\n------------Search Borrowing Record by Student ID----------");
         System.out.print("\nEnter student ID: ");
         boolean found = false; //assume belum jumpa record lagi
@@ -240,7 +240,6 @@ public class BorrowEquipment extends CampusService{
     @Override
     public void saveToFile(){
         try (BufferedWriter saveFile = new BufferedWriter(new FileWriter(fileName))){
-            Vector<Equipment> records = Equipment.getRecord();
             for (int i = 0; i < records.size(); i++){
                 saveFile.write(records.get(i).toTXTFile());
                 saveFile.newLine();
@@ -270,7 +269,6 @@ public class BorrowEquipment extends CampusService{
     
     public void totalBorowed(){
         System.out.println("\n----------Total Number of Borrowed Equipment----------");
-        Vector<Equipment> records = Equipment.getRecord();
         if (records.isEmpty()){
             System.out.println("\nNo records found.");
             return;
@@ -287,7 +285,6 @@ public class BorrowEquipment extends CampusService{
     //(v) determine whether the borrowing duration is acceptable.
     public void durationRule(){
         System.out.println("\n---------Check Borrowing Duration---------");
-        Vector<Equipment> records = Equipment.getRecord();
         if (records.isEmpty()){
             System.out.println("No records found");
         }
@@ -322,12 +319,6 @@ public class BorrowEquipment extends CampusService{
                 System.out.println("No record found for your student ID");
             }         
         }
-    }
-
-    public static void main (String[] agrs){
-        Scanner input = new Scanner (System.in);
-        BorrowEquipment eqp = new BorrowEquipment(input);
-        eqp.displayMenu();
     }
 }
 

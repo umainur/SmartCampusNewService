@@ -82,7 +82,8 @@ class FReportIssue{
 
 public class IssueReporting extends CampusService {
 
-    Scanner scanner;
+    private Scanner scanner;
+    Vector<FReportIssue> issueList = FReportIssue.getRecord();
     
     IssueReporting(Scanner input){
         super("Report Issue", "issues.txt");
@@ -214,8 +215,6 @@ public class IssueReporting extends CampusService {
 
     @Override //(ii) display all issues
     public void displayRecords(){
-        Vector<FReportIssue> issueList = FReportIssue.getRecord();
-
         System.out.println("\n----------List of Repoted Issues---------");
         if (issueList.isEmpty()) {
             System.out.println("\nNo issues reported.");
@@ -236,8 +235,6 @@ public class IssueReporting extends CampusService {
 
     @Override //(iii) search issue by reporter ID
     public void searchRecord(String reporterID){
-        Vector<FReportIssue> issueList = FReportIssue.getRecord();
- 
         boolean found = false;
         for (int i = 0; i < issueList.size(); i++) {
             if (issueList.get(i).getID().equalsIgnoreCase(reporterID)){
@@ -259,8 +256,6 @@ public class IssueReporting extends CampusService {
 
     //(iv)count total number of issue by priority level
     public void countIssue(){
-        Vector<FReportIssue> issueList = FReportIssue.getRecord();
-
         System.out.println("\n---Count Total Number of Issues by Priority Level---");
         PriorityLevel plevel = null;
         while (plevel == null){
@@ -295,8 +290,6 @@ public class IssueReporting extends CampusService {
 
     //(v) update issue status
     public void updateStatus(String reporterID){
-        Vector<FReportIssue> issueList = FReportIssue.getRecord();
-
         System.out.println("\n----------Update Issue Status----------");
         boolean foundID = false;
         for (int i = 0; i < issueList.size(); i++) {
@@ -343,9 +336,8 @@ public class IssueReporting extends CampusService {
     @Override
     public void saveToFile(){
         try (BufferedWriter saveFile = new BufferedWriter(new FileWriter(fileName))){
-            Vector<FReportIssue> records = FReportIssue.getRecord();
-            for (int i = 0; i < records.size(); i++){
-                saveFile.write(records.get(i).toTXTFile());
+            for (int i = 0; i < issueList.size(); i++){
+                saveFile.write(issueList.get(i).toTXTFile());
                 saveFile.newLine();
             }
             saveSuccess();
@@ -369,13 +361,6 @@ public class IssueReporting extends CampusService {
         } catch (IOException e) {
             System.out.println("File cannot be load");
         }
-    }
-
-    
-    public static void main (String[] agrs){
-        Scanner input = new Scanner (System.in);
-        IssueReporting issueReport = new IssueReporting(input);
-        issueReport.displayMenu();
     }
 }
 
