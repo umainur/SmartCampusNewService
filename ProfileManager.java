@@ -247,10 +247,6 @@ public class ProfileManager extends CampusService{
             catch (NumberFormatException e) { System.out.println("Invalid input."); return -1; }
         }
 
-        public static void main(String[] args) {
-            Scanner in = new Scanner(System.in);
-            ProfileManager pm = new ProfileManager(in);
-            pm.displayMenu();
-        }
+        
     
 }

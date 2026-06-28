@@ -313,11 +313,7 @@ public class FacilityBookings extends CampusService {
         try { return Integer.parseInt(scanner.nextLine().trim()); }
         catch (NumberFormatException e) { System.out.println("Invalid input."); return -1; }
     }
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        FacilityBookings fbm = new FacilityBookings(in);
-        fbm.displayMenu();
-    }
+    
 
 }
 

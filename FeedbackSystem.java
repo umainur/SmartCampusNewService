@@ -246,9 +246,5 @@ public class FeedbackSystem extends CampusService {
         }
     }
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        FeedbackSystem fs = new FeedbackSystem(in);
-        fs.displayMenu();
-    }
+    
 }
