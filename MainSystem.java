@@ -74,10 +74,10 @@ public class MainSystem {
         System.out.println("\n--------------------------------------");
         System.out.println("           SYSTEM SUMMARY             ");
         System.out.println("--------------------------------------");
-        System.out.printf( "  Total Registered Students :" + pm.getStudentCount());
-        System.out.printf( "  Total Facility Bookings   : " + fb.getBookingCount());
-        System.out.printf( "  Total Equipment Borrowed  : " +  Equipment.getTotalBorrowed());
-        System.out.printf( "  Total Issue Reports       : " + FReportIssue.getTotalIssues());
+        System.out.printf( "\n  Total Registered Students :" + pm.getStudentCount());
+        System.out.printf( "\n  Total Facility Bookings   : " + fb.getBookingCount());
+        System.out.printf( "\n  Total Equipment Borrowed  : " +  Equipment.getTotalBorrowed());
+        System.out.printf( "\n  Total Issue Reports       : " + FReportIssue.getTotalIssues());
         
     }
 }
