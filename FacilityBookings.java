@@ -174,7 +174,6 @@ public void displayMenu() {
     public void loadFromFile() {
         File file = new File(fileName);
         if (!file.exists()) {
-            System.out.println("No saved data found for " + serviceType);
             return;
         }
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
