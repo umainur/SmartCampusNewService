@@ -65,52 +65,42 @@ public class FacilityBookings extends CampusService {
 
     public int getBookingCount() { return bookings.size();}
 
-    @Override
-    public void displayMenu() {
-        int option;
-        do {
-            System.out.println("\n--------Facility Booking Menu----------\n");
-            System.out.println("1. Create a new booking");
-            System.out.println("2. Display All Bookings ");
-            System.out.println("3. Search Bookings by Student ID");
-            System.out.println("4. Calculate total booking duration for a student");
-            System.out.println("5. Update Booking Status");
-            System.out.println("6. Save Bookings to File");
-            System.out.println("7. Load Bookings from File");
-            System.out.println("0. Back to Main Menu");
-            System.out.print("Select an option: ");
-            option = scanner.nextInt();
-            scanner.nextLine(); 
+@Override
+public void displayMenu() {
+    int option;
+    do {
+        System.out.println("\n--------Facility Booking Menu----------\n");
+        System.out.println("1. Create a new booking");
+        System.out.println("2. Display All Bookings ");
+        System.out.println("3. Search Bookings by Student ID");
+        System.out.println("4. Calculate total booking duration for a student");
+        System.out.println("5. Update Booking Status");
+        System.out.println("6. Save Bookings to File");
+        System.out.println("7. Load Bookings from File");
+        System.out.println("0. Back to Main Menu");
+        System.out.print("Select an option: ");
+        
+        try {
+            option = Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a number.");
+            option = -1;
+            continue;
+        }
 
-            switch (option) {
-                case 1:
-                    addRecord();
-                    break;
-                case 2:
-                    displayRecords();
-                    break;
-                case 3:
-                    searchRecord();
-                    break;
-                case 4:
-                    calculateTotalDuration();
-                    break;
-                case 5:
-                    updateBookingStatus();
-                    break;
-                case 6:
-                    saveToFile();
-                    break;
-                case 7:
-                    loadFromFile();
-                    break;
-                case 0:
-                    return;    
-                default:
-                    System.out.println("Invalid option. Please try again.\n");
-            }
-        } while (option != 0);
-    }
+        switch (option) {
+            case 1: addRecord(); break;
+            case 2: displayRecords(); break;
+            case 3: searchRecord(); break;
+            case 4: calculateTotalDuration(); break;
+            case 5: updateBookingStatus(); break;
+            case 6: saveToFile(); break;
+            case 7: loadFromFile(); break;
+            case 0: return;
+            default: System.out.println("Invalid option. Please try again.\n");
+        }
+    } while (option != 0);
+}
     
     @Override
     public void addRecord() {
@@ -131,6 +121,7 @@ public class FacilityBookings extends CampusService {
         saveToFile();
         System.out.println("Booking added successfully! \nBooking ID: " + bookingId + "\n");
     }
+
     @Override
     public void displayRecords() {
         if (bookings.size() == 0) {
@@ -168,15 +159,12 @@ public class FacilityBookings extends CampusService {
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
             for (int i = 0; i < bookings.size(); i++) {
                 Bookings b = bookings.get(i);
-                pw.println(b.getBookingId() + "|" +
-                           b.getStudentId() + "|" +
-                           b.getFacilityType() + "|" +
-                           b.getTimeSlot() + "|" +
-                           b.getDurationHours() + "|" +
-                           b.getDate() + "|" +
+                pw.println(b.getBookingId() + "|" + b.getStudentId() + "|" +
+                           b.getFacilityType() + "|" + b.getTimeSlot() + "|" +
+                           b.getDurationHours() + "|" + b.getDate() + "|" +
                            b.getStatus());
             }
-            saveSuccess(); // inherited from CampusService
+            saveSuccess();
         } catch (IOException e) {
             System.out.println("Error saving to file: " + e.getMessage());
         }
@@ -196,20 +184,19 @@ public class FacilityBookings extends CampusService {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 if (parts.length < 7) continue;
-                String bookingId  = parts[0];
-                String studentId  = parts[1];
-                FacilityType ft   = FacilityType.valueOf(parts[2]);
-                TimeSlot ts       = TimeSlot.valueOf(parts[3]);
-                int duration      = Integer.parseInt(parts[4]);
-                String date       = parts[5];
+                String bookingId = parts[0];
+                String studentId = parts[1];
+                FacilityType ft = FacilityType.valueOf(parts[2]);
+                TimeSlot ts = TimeSlot.valueOf(parts[3]);
+                int duration = Integer.parseInt(parts[4]);
+                String date = parts[5];
                 BookingStatus status = BookingStatus.valueOf(parts[6]);
-
                 Bookings b = new Bookings(bookingId, studentId, ft, ts, duration, date);
                 b.setStatus(status);
                 bookings.add(b);
                 bookingCounter++;
             }
-            loadSuccess(); // inherited from CampusService
+            loadSuccess(); 
         } catch (IOException e) {
             System.out.println("Error loading from file: " + e.getMessage());
         }
