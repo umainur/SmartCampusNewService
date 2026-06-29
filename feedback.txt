@@ -5,3 +5,4 @@ lia|5|COLLEGE|ktf cantik
 Mirah|5|BUS|Bus on time
 Kira|4|BUS|bawa laju
 kalid|5|FOOD|meranti makanan dia murah
+jas|4|FOOD|Air kat meranti semua sedap
