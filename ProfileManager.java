@@ -172,7 +172,7 @@ public class ProfileManager extends CampusService{
 
         @Override
         public void saveToFile() {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName,false))) {
                 for (int i = 0; i < students.size(); i++) {
                     bw.write(students.get(i).toTXT());
                     bw.newLine();
@@ -190,6 +190,7 @@ public class ProfileManager extends CampusService{
 
                 try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                     String line;
+                    students.clear();
                 while ((line = br.readLine()) != null) {
                     if (line.isEmpty()) continue;
                     try {
