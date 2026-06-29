@@ -75,6 +75,8 @@ public class FacilityBookings extends CampusService {
             System.out.println("3. Search Bookings by Student ID");
             System.out.println("4. Calculate total booking duration for a student");
             System.out.println("5. Update Booking Status");
+            System.out.println("6. Save Bookings to File");
+            System.out.println("7. Load Bookings from File");
             System.out.println("0. Back to Main Menu");
             System.out.print("Select an option: ");
             option = scanner.nextInt();
@@ -95,6 +97,12 @@ public class FacilityBookings extends CampusService {
                     break;
                 case 5:
                     updateBookingStatus();
+                    break;
+                case 6:
+                    saveToFile();
+                    break;
+                case 7:
+                    loadFromFile();
                     break;
                 case 0:
                     return;    
@@ -152,26 +160,9 @@ public class FacilityBookings extends CampusService {
         System.out.println("\n-------Search Booking by Student ID-------");
         System.out.print("Enter Student ID: ");
         String id = scanner.nextLine().toUpperCase();
-        searchRecord(id);   // delegate to the overridden method
+        searchRecord(id);   
     }
 
-/* 
-    private void searchRecord() {
-       System.out.println("\n-------Search Booking by Student ID-------");
-        System.out.print("Enter Student ID: ");
-        String id = scanner.nextLine().toUpperCase();
- 
-        boolean found = false;
-        for (int i = 0; i < bookings.size(); i++) {
-            if (bookings.get(i).getStudentId().equalsIgnoreCase(id)) {
-                bookings.get(i).displayInfo();
-                found = true;
-            }
-        }
-        if (!found)
-            System.out.println("No bookings found for Student ID: " + id);
-    }
-*/
     @Override
     public void saveToFile() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
