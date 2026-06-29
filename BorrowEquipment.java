@@ -118,7 +118,7 @@ public class BorrowEquipment extends CampusService{
                         case 2:
                             displayRecords(); break;
                         case 3:
-                            System.out.println("Enter ID: ");
+                            System.out.print("Enter ID: ");
                             searchRecord(scanner.nextLine().trim()); 
                             break;
                         case 4:
@@ -135,7 +135,7 @@ public class BorrowEquipment extends CampusService{
                             System.out.println("\nInvalid choice. Please try again!");
                             continue;
                     }
-            } catch (NumberFormatException e) { System.out.println("Invalid choice.Please try again");} 
+            } catch (NumberFormatException e) { System.out.println("Invalid choice.Please enter number (0-7).");} 
         } while (choice != 0);
     }
 

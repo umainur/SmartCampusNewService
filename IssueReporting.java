@@ -117,13 +117,13 @@ public class IssueReporting extends CampusService {
                 case 2:
                     displayRecords(); break;
                 case 3:
-                    System.out.println("Enter ID: ");
+                    System.out.print("Enter ID: ");
                         searchRecord(scanner.nextLine().trim()); 
                         break;
                 case 4:
                     countIssue(); break;
                 case 5:
-                    System.out.println("Enter ID: ");
+                    System.out.print("Enter ID: ");
                         updateStatus(scanner.nextLine().trim()); 
                         break;
                 case 6:
@@ -132,10 +132,12 @@ public class IssueReporting extends CampusService {
                     loadFromFile(); break;
                 case 0:
                     break;
-                    
+                default:
+                    System.out.println("\nInvalid choice. Please try again!");
+                    continue;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid choice. Please try again.");
+                System.out.println("Invalid choice. Please enter number (0-7).");
             } 
         } while (choice != 0);
     }
@@ -172,7 +174,7 @@ public class IssueReporting extends CampusService {
                     continue;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid choice.Please try again");
+                System.out.println("Invalid choice.Please enter number (1-5)");
             }
         
         
@@ -198,7 +200,7 @@ public class IssueReporting extends CampusService {
                         continue;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("\nInvalid choice. Please try again!");
+                System.out.println("\nInvalid choice. Please enter number (1-4)");
             }
         }
        
@@ -301,8 +303,8 @@ public class IssueReporting extends CampusService {
 
                 ReportStatus newStatus = null;
                 while(newStatus == null){
-                    System.out.println("Choose new status: \n1. OPEN\n2. IN_PROGRESS\n3. RESOLVED\n4. CLOSED");
-                    System.out.print("Enter chocie:");
+                    System.out.println("\nChoose new status: \n1. OPEN\n2. IN_PROGRESS\n3. RESOLVED\n4. CLOSED");
+                    System.out.print("Enter choice:");
                     int choice = Integer.parseInt(scanner.nextLine().trim());
 
                     switch (choice) {
@@ -319,7 +321,7 @@ public class IssueReporting extends CampusService {
                             newStatus = ReportStatus.CLOSED;
                             break;
                         default:
-                            System.out.println("Invalid choice. Please try again!");
+                            System.out.println("\nInvalid choice. Please try again!");
                             continue;
                     }
                 }
